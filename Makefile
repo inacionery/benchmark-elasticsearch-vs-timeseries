@@ -1,5 +1,39 @@
 CURRENT_DIR=$(shell pwd)
 
+bench-ac-elasticsearch:
+	time make bench-ingestion-ac-elasticsearch
+	sleep 10
+	time make bench-disk-usage-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+
+bench-elasticsearch:
+	time make bench-ingestion-elasticsearch
+	sleep 10
+	time make bench-disk-usage-elasticsearch
+	time make bench-response-time-elasticsearch
+	time make bench-response-time-elasticsearch
+	time make bench-response-time-elasticsearch
+
+bench-ac-timescaledb:
+	time make bench-ingestion-ac-timescaledb
+	sleep 10
+	time make bench-disk-usage-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+
+bench-timescaledb:
+	time make bench-ingestion-timescaledb
+	sleep 10
+	time make bench-disk-usage-timescaledb
+	time make bench-response-time-timescaledb
+	time make bench-response-time-timescaledb
+	time make bench-response-time-timescaledb
+
+bench-disk-usage-ac-elasticsearch:
+	curl -s -XGET "http://localhost:19200/_cat/indices?v" | grep page
 
 bench-disk-usage-elasticsearch:
 	curl -s -XGET "http://localhost:19200/_cat/indices?v" | grep statistic
@@ -7,17 +41,26 @@ bench-disk-usage-elasticsearch:
 bench-disk-usage-timescaledb:
 	du -shm ./timescaledb
 
+bench-ingestion-ac-elasticsearch:
+	php ./src/elasticsearch/ingestion-ac.php
 
 bench-ingestion-elasticsearch:
 	php ./src/elasticsearch/ingestion.php
 
+bench-ingestion-ac-timescaledb:
+	php ./src/timescaledb/ingestion-ac.php
 
 bench-ingestion-timescaledb:
 	php ./src/timescaledb/ingestion.php
 
+bench-response-time-ac-elasticsearch:
+	php ./src/elasticsearch/response-time-ac.php
 
 bench-response-time-elasticsearch:
 	php ./src/elasticsearch/response-time.php
+
+bench-response-time-ac-timescaledb:
+	php ./src/timescaledb/response-time-ac.php
 
 bench-response-time-timescaledb:
 	php ./src/timescaledb/response-time.php

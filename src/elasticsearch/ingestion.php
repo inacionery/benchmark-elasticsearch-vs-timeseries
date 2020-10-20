@@ -1,12 +1,14 @@
 <?php
 
+ini_set('memory_limit', '-1');
+
 require_once __DIR__ . '/../utils.php';
 
 use Elastica\Client;
 use Elastica\Document;
 
 $elasticaClient = new Client([
-    'host' => 'dev.test',
+    'host' => 'localhost',
     'port' => 19200,
 ]);
 
@@ -54,7 +56,8 @@ $index->create([
 ], true);
 
 $docs = [];
-foreach (generateFixtures(1, DURATION_LAST_YEAR, 100, 50, ELASTICSEARCH) as $fixtures) {
+$start = microtime(true);
+foreach (generateFixtures(1, DURATION_LAST_MONTH, 100, 50, ELASTICSEARCH) as $fixtures) {
     foreach ($fixtures as $doc) {
         $docs[] = new Document('', [
             '@timestamp' => $doc['date']->format(DateTime::RFC3339),
@@ -67,7 +70,7 @@ foreach (generateFixtures(1, DURATION_LAST_YEAR, 100, 50, ELASTICSEARCH) as $fix
         ]);
     }
 
-    if (count($docs) > 25000) {
+    if (count($docs) > 80000) {
         $index->addDocuments($docs);
         $docs = [];
     }
@@ -78,3 +81,8 @@ if ($docs) {
 }
 
 $index->refresh();
+
+$end = microtime(true);
+$executionTime = getTime($end - $start);
+
+echo "[Elasticsearch] Ingestion time: $executionTime\r\n";

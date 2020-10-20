@@ -7,7 +7,7 @@ use Elastica\Query;
 use Elastica\Search;
 
 $elasticaClient = new Client([
-    'host' => 'dev.test',
+    'host' => 'localhost',
     'port' => 19200,
 ]);
 
@@ -17,7 +17,7 @@ $index = $elasticaClient->getIndex('statistic');
 $search->addIndex($index);
 
 $hours = generateHours(100);
-$queryTime = 0;
+$start = microtime(true);
 $total = count($hours);
 
 foreach ($hours as $i => $hour) {
@@ -67,11 +67,10 @@ foreach ($hours as $i => $hour) {
     ]);
 
     $search->setQuery($query);
-    $result = $search->search();
-
-    $queryTime += $result->getResponse()->getQueryTime();
-
-    echo ($i + 1) . '/' . $total . "\r\n";
+    $search->search()->getAggregations();
 }
 
-echo "[Elasticsearch] Response time: $queryTime\r\n";
+$end = microtime(true);
+$executionTime = getTime($end - $start);
+
+echo "[Elasticsearch] Response time: $executionTime\r\n";

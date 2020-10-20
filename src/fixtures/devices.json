@@ -1,0 +1,676 @@
+[
+    {
+        "Android": [
+            {
+                "EReader": [
+                    "Chrome Mobile",
+                    "Kindle-Silk"
+                ]
+            },
+            {
+                "MediaHub": [
+                    "Chrome Mobile",
+                    "Kindle-Silk"
+                ]
+            },
+            {
+                "Mobile": [
+                    "AirWatch Browser",
+                    "Chrome Mobile"
+                ]
+            },
+            {
+                "SmallScreen": [
+                    "Chrome Mobile"
+                ]
+            },
+            {
+                "SmartPhone": [
+                    "AirWatch Browser",
+                    "Aloha Browser for Android",
+                    "Android",
+                    "Baidu Browser",
+                    "CM Browser",
+                    "CM Mobile Browser",
+                    "Chrome Mobile",
+                    "Coc Coc",
+                    "Daum for Android",
+                    "Delta Browser",
+                    "DuckDuckGo for Android",
+                    "Ecosia for Android",
+                    "Edge for Android",
+                    "Facebook for Android",
+                    "Firefox Focus for Android (Mobile in desktop mode)",
+                    "Firefox Focus for Android",
+                    "Firefox for Mobile",
+                    "Flipboard for Android",
+                    "Flipboard",
+                    "Google Search App for Android",
+                    "HeyTapBrowser for Android",
+                    "Huawei Browser",
+                    "Instagram for Android",
+                    "Iron mobile",
+                    "Jio Browser",
+                    "LINE App",
+                    "LeBrowser",
+                    "Lenovo Browser for Mobile",
+                    "LinkedIn for Android",
+                    "MIUI Browser",
+                    "Managed Browser",
+                    "Maxthon for Android",
+                    "Mint Browser for Android",
+                    "Mint Browser",
+                    "Mobile Safari",
+                    "Opera Desktop",
+                    "Opera Mini",
+                    "Opera Mobile",
+                    "Opera Touch for Android",
+                    "Opera Touch",
+                    "OppoBrowser",
+                    "Pinterest for Android",
+                    "Puffin for Android",
+                    "QQ Browser - Blink Engine",
+                    "QQ Browser for Android",
+                    "QQ Browser",
+                    "Quark Browser for Android",
+                    "Quick Browser for Android",
+                    "Realme Browser",
+                    "Samsung Browser",
+                    "Seznam For Android",
+                    "Shark Browser",
+                    "Sleipnir - WebKit Engine",
+                    "Snapchat for Android",
+                    "Snapchat",
+                    "Sogou Mobile Browser",
+                    "Surf Browser for Android",
+                    "TopBuzz for Android",
+                    "Turbo Browser",
+                    "Twitter for Android",
+                    "UC Mini for Android",
+                    "UC Turbo",
+                    "UCBrowser for Android (Speed Mode)",
+                    "UCBrowser for Android",
+                    "Unknown Android App - Blink Engine",
+                    "Unknown Android App",
+                    "Unknown",
+                    "Venus Browser",
+                    "Vivo Browser",
+                    "Web Light",
+                    "Whale mobile",
+                    "Whale",
+                    "Yahoo! browser for Android",
+                    "Yandex Search for Android",
+                    "Yandex.Browser Lite For Android",
+                    "Yandex.Browser for Android",
+                    "Yandex.Browser for Linux",
+                    "mCentBrowser",
+                    "mz browser",
+                    "wkbrowser"
+                ]
+            },
+            {
+                "Tablet": [
+                    "CM Browser",
+                    "Chrome Mobile",
+                    "Ecosia for Android",
+                    "Edge for Android",
+                    "Facebook for Android",
+                    "Firefox for Mobile",
+                    "Flipboard",
+                    "Huawei Browser",
+                    "Instagram for Android",
+                    "Kindle-Silk",
+                    "MIUI Browser",
+                    "Mint Browser for Android",
+                    "Opera Mobile",
+                    "Pinterest for Android",
+                    "Puffin for Android",
+                    "Samsung Browser",
+                    "Seznam For Android",
+                    "UCBrowser for Android",
+                    "Unknown Android App",
+                    "Yandex Search for Android",
+                    "Yandex.Browser for Android"
+                ]
+            },
+            {
+                "Tv": [
+                    "Android",
+                    "Chrome Mobile",
+                    "NetCast",
+                    "Opera Desktop"
+                ]
+            }
+        ]
+    },
+    {
+        "BlackBerry OS": [
+            {
+                "SmartPhone": [
+                    "BlackBerry Browser",
+                    "BlackBerry"
+                ]
+            }
+        ]
+    },
+    {
+        "Fedora": [
+            {
+                "Desktop": [
+                    "Chrome",
+                    "Firefox"
+                ]
+            }
+        ]
+    },
+    {
+        "FreeBSD": [
+            {
+                "Desktop": [
+                    "Chrome",
+                    "Firefox",
+                    "Iridium"
+                ]
+            },
+            {
+                "SmartPhone": [
+                    "Android"
+                ]
+            }
+        ]
+    },
+    {
+        "KaiOS": [
+            {
+                "Mobile": [
+                    "Firefox for Mobile"
+                ]
+            },
+            {
+                "SmallScreen": [
+                    "Firefox for Mobile"
+                ]
+            },
+            {
+                "SmartPhone": [
+                    "Firefox for Mobile"
+                ]
+            }
+        ]
+    },
+    {
+        "Linux": [
+            {
+                "Desktop": [
+                    "Altibrowser",
+                    "Chrome",
+                    "Chromium Project",
+                    "Cyberfox",
+                    "Edge (Chromium) for Linux",
+                    "Epiphany",
+                    "Firefox",
+                    "IceWeasel",
+                    "Iron",
+                    "MIUI Browser (Mobile in desktop mode)",
+                    "MIUI Browser",
+                    "Opera Desktop",
+                    "Opera Mobile (Mobile in desktop mode)",
+                    "Pale Moon",
+                    "PhantomJS",
+                    "Puffin",
+                    "Safari",
+                    "SeaMonkey",
+                    "Seznam For Android (Mobile in desktop mode)",
+                    "Tbrowser",
+                    "Unknown Linux App",
+                    "Unknown",
+                    "Vivaldi",
+                    "Waterfox",
+                    "Whale mobile",
+                    "Yandex.Browser for Linux"
+                ]
+            },
+            {
+                "MediaHub": [
+                    "Chrome"
+                ]
+            },
+            {
+                "SmallScreen": [
+                    "Samsung Browser (Mobile in desktop mode)"
+                ]
+            },
+            {
+                "SmartPhone": [
+                    "DuckDuckGo for Android (Mobile in desktop mode)",
+                    "HeyTapBrowser (Mobile in desktop mode)",
+                    "Unknown iOS App"
+                ]
+            },
+            {
+                "Tv": [
+                    "Chromium Project",
+                    "NetCast",
+                    "Opera TV browser"
+                ]
+            }
+        ]
+    },
+    {
+        "Mac OS X": [
+            {
+                "Desktop": [
+                    "AirWatch Browser",
+                    "Chrome",
+                    "Edge (Chromium) for Macintosh",
+                    "Firefox",
+                    "LinkedIn for Mac",
+                    "Minefield",
+                    "Opera Desktop",
+                    "Pale Moon",
+                    "Safari",
+                    "TenFourFox",
+                    "Unknown Mac OS X App - WebKit Engine",
+                    "Unknown",
+                    "Waterfox",
+                    "Whale mobile",
+                    "Yandex.Browser for Mac OS X"
+                ]
+            }
+        ]
+    },
+    {
+        "OpenBSD": [
+            {
+                "Desktop": [
+                    "Chrome",
+                    "Firefox"
+                ]
+            }
+        ]
+    },
+    {
+        "PS4 Software": [
+            {
+                "Console": [
+                    "Netfront"
+                ]
+            }
+        ]
+    },
+    {
+        "Raspbian": [
+            {
+                "Desktop": [
+                    "Chromium Project"
+                ]
+            }
+        ]
+    },
+    {
+        "Sailfish OS": [
+            {
+                "Mobile": [
+                    "Sailfish Browser"
+                ]
+            }
+        ]
+    },
+    {
+        "SunOS": [
+            {
+                "Desktop": [
+                    "Firefox"
+                ]
+            }
+        ]
+    },
+    {
+        "Tizen": [
+            {
+                "SmartPhone": [
+                    "Chrome",
+                    "Samsung Browser"
+                ]
+            },
+            {
+                "SmartWatch": [
+                    "Chrome"
+                ]
+            },
+            {
+                "Tv": [
+                    "Samsung Browser"
+                ]
+            }
+        ]
+    },
+    {
+        "Ubuntu": [
+            {
+                "Desktop": [
+                    "Chrome",
+                    "Chromium Project",
+                    "Epiphany",
+                    "Firefox",
+                    "Unknown"
+                ]
+            },
+            {
+                "SmartPhone": [
+                    "Chrome Mobile"
+                ]
+            }
+        ]
+    },
+    {
+        "Unknown": [
+            {
+                "Console": [
+                    "Netfront"
+                ]
+            },
+            {
+                "Desktop": [
+                    "Chrome",
+                    "Firefox",
+                    "Office",
+                    "Opera Desktop",
+                    "Unknown Crawler",
+                    "Unknown Mac OS X App - WebKit Engine",
+                    "Unknown"
+                ]
+            },
+            {
+                "Mobile": [
+                    "Jasmine"
+                ]
+            },
+            {
+                "SmallScreen": [
+                    "Opera Mini"
+                ]
+            },
+            {
+                "SmartPhone": [
+                    "Chrome Mobile",
+                    "Chrome for iOS",
+                    "Chrome",
+                    "Mobile Safari",
+                    "Unknown"
+                ]
+            },
+            {
+                "Tablet": [
+                    "Chrome Mobile",
+                    "Mobile Safari"
+                ]
+            },
+            {
+                "Unknown": [
+                    "Unknown"
+                ]
+            }
+        ]
+    },
+    {
+        "Windows NT": [
+            {
+                "Desktop": [
+                    "Firefox",
+                    "Internet Explorer",
+                    "Opera Desktop"
+                ]
+            }
+        ]
+    },
+    {
+        "Windows Phone": [
+            {
+                "SmartPhone": [
+                    "Edge (Mobile in desktop mode)",
+                    "Edge Mobile",
+                    "Edge",
+                    "Internet Explorer (Mobile in desktop mode)",
+                    "Internet Explorer Mobile"
+                ]
+            }
+        ]
+    },
+    {
+        "Windows RT": [
+            {
+                "Tablet": [
+                    "Internet Explorer"
+                ]
+            }
+        ]
+    },
+    {
+        "Windows": [
+            {
+                "Console": [
+                    "Edge",
+                    "Internet Explorer"
+                ]
+            },
+            {
+                "Desktop": [
+                    "115Browser",
+                    "AOL Shield",
+                    "Amigo",
+                    "Avast Secure Browser",
+                    "Baidu Browser",
+                    "Cheetah Secure Browser - Blink Engine",
+                    "Cheetah Secure Browser - Trident Engine",
+                    "Chim Lac",
+                    "Chrome",
+                    "Coc Coc",
+                    "Cyberfox",
+                    "DM Browser",
+                    "Edge (Chromium) for Windows",
+                    "Edge",
+                    "Firefox",
+                    "Internet Explorer",
+                    "Iridium",
+                    "Iron",
+                    "Kinza",
+                    "Lovense Browser",
+                    "Lunascape",
+                    "Maxthon",
+                    "Mypal",
+                    "NetCast",
+                    "Opera Desktop",
+                    "Pale Moon",
+                    "PhantomJS",
+                    "QQ Browser - Blink Engine",
+                    "QQ Browser - Trident Engine",
+                    "QQ Browser for Windows",
+                    "QQ Browser",
+                    "SLBrowser",
+                    "Safari",
+                    "SeaMonkey",
+                    "Secure Browser",
+                    "Sleipnir - Blink Engine",
+                    "Sleipnir - WebKit Engine",
+                    "Sputnik Browser",
+                    "Steam",
+                    "Swing Browser",
+                    "TheWorld",
+                    "UCBrowser for Windows",
+                    "Unknown Windows App - Blink Engine",
+                    "Unknown Windows App - Gecko Engine",
+                    "Unknown Windows App - WebKit Engine",
+                    "Unknown",
+                    "Vivaldi",
+                    "Vivo Browser",
+                    "Waterfox",
+                    "Whale mobile",
+                    "Whale",
+                    "WhatsApp",
+                    "Xvast",
+                    "Yandex.Browser for Windows",
+                    "mz browser",
+                    "t-online.de Browser"
+                ]
+            },
+            {
+                "Mobile": [
+                    "UCBrowser for Mobile (Mobile in desktop mode)"
+                ]
+            },
+            {
+                "Tablet": [
+                    "Internet Explorer",
+                    "Unknown"
+                ]
+            }
+        ]
+    },
+    {
+        "iOS": [
+            {
+                "Desktop": [
+                    "Firefox for iOS (Mobile in desktop mode)"
+                ]
+            },
+            {
+                "Mobile": [
+                    "Chrome for iOS",
+                    "Google Search App for iOS",
+                    "Instagram for iOS",
+                    "Mobile Safari",
+                    "Unknown iOS App"
+                ]
+            },
+            {
+                "SmartPhone": [
+                    "Aloha Browser for iOS",
+                    "Chrome for iOS",
+                    "Coc Coc",
+                    "DuckDuckGo for iOS",
+                    "Ecosia for iOS",
+                    "Edge for iOS",
+                    "Facebook for iOS",
+                    "Firefox for iOS",
+                    "Flipboard for iOS",
+                    "Flipboard",
+                    "Focus for iOS",
+                    "GoNative for iOS",
+                    "Google Search App for iOS",
+                    "Instagram for iOS",
+                    "LINE App",
+                    "LinkedIn for iOS",
+                    "MIUI Browser",
+                    "Mail Master For iOS",
+                    "Mail for iOS",
+                    "Managed Browser for iOS",
+                    "Mobile Safari",
+                    "Opera Touch for iOS",
+                    "Outlook For iOS",
+                    "Pinterest for iOS",
+                    "QQ Browser - Blink Engine",
+                    "QQ Browser",
+                    "Smooz for iOS",
+                    "Snapchat for iOS",
+                    "Twitter for iPhone",
+                    "UCBrowser for iPhone",
+                    "Unknown iOS App",
+                    "Unknown",
+                    "WorxWeb",
+                    "Yahoo Mail For iOS",
+                    "Yandex.Browser for iOS"
+                ]
+            },
+            {
+                "Tablet": [
+                    "AirWatch Browser",
+                    "Aloha Browser for iOS",
+                    "Baidu Browser HD - WebKit Engine",
+                    "Chrome for iOS",
+                    "Edge for iOS",
+                    "Facebook for iOS",
+                    "Firefox for iOS",
+                    "Flipboard for iOS",
+                    "Flipboard",
+                    "Focus for iOS",
+                    "Google Search App for iOS",
+                    "Instagram for iOS",
+                    "LINE App",
+                    "LinkedIn for iOS",
+                    "MIUI Browser",
+                    "Maxthon for iOS",
+                    "Mobile Safari",
+                    "News",
+                    "Pinterest for iOS",
+                    "Smooz for iOS",
+                    "Twitter for iPhone",
+                    "Unknown iOS App",
+                    "Unknown",
+                    "Yahoo Mail For iOS",
+                    "Yandex.Browser for iOS"
+                ]
+            }
+        ]
+    },
+    {
+        "iPadOS": [
+            {
+                "Tablet": [
+                    "AirWatch Browser",
+                    "Aloha Browser for iOS",
+                    "Chrome for iOS",
+                    "Edge for iOS",
+                    "Facebook for iOS",
+                    "Firefox for iOS",
+                    "GoNative for iOS",
+                    "Google Search App for iOS",
+                    "Instagram for iOS",
+                    "LINE App",
+                    "LinkedIn for iOS",
+                    "Mobile Safari",
+                    "Opera Touch for iOS",
+                    "Snapchat for iOS",
+                    "Twitter for iPhone",
+                    "Unknown iOS App",
+                    "Unknown",
+                    "Yandex.Browser for iOS"
+                ]
+            }
+        ]
+    },
+    {
+        "macOS": [
+            {
+                "Desktop": [
+                    "Chrome",
+                    "Coc Coc",
+                    "DuckDuckGo for iOS (Mobile in desktop mode)",
+                    "Edge (Chromium) for Macintosh",
+                    "Edge for iOS (Mobile in desktop mode)",
+                    "Firefox",
+                    "Flipboard for Mac",
+                    "Iridium",
+                    "Iron",
+                    "LinkedIn for Mac",
+                    "Maxthon",
+                    "Mobile Safari",
+                    "Opera Desktop",
+                    "QQ Browser",
+                    "Safari",
+                    "Unknown Mac OS X App - WebKit Engine",
+                    "Unknown",
+                    "Vivaldi",
+                    "Whale mobile",
+                    "Whale",
+                    "Yandex.Browser for Mac OS X"
+                ]
+            },
+            {
+                "Mobile": [
+                    "Unknown iOS App"
+                ]
+            }
+        ]
+    }
+]
