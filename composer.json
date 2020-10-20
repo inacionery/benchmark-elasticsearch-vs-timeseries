@@ -1,5 +1,7 @@
 {
     "name": "inacionery/benchmark-elasticsearch-vs-timeseries",
     "require": {
-        "ruflin/elastica": "^6.1"
+        "amphp/postgres": "^1.3",
+        "ruflin/elastica": "^7.0"
+    }
 }

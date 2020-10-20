@@ -2,5 +2,7 @@
 vendor/
 
 # docker volume files
+/timescaledb/*
+!/timescaledb/.gitkeep
 /elasticsearch/*
 !/elasticsearch/.gitkeep
