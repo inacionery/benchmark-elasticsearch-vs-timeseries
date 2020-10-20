@@ -2,7 +2,6 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-const INFLUXDB = 'InfluxDB';
 const ELASTICSEARCH = 'Elasticsearch';
 
 const STATUS_CODES_TYPE_INFORMATION = '1xx';
@@ -123,7 +122,7 @@ function generateHours(int $type = DURATION_LAST_DAY)
     return $hours;
 }
 
-function generateFixtures(int $projectCount = 1, int $duration = DURATION_LAST_DAY, int $perHourUserAgentsCount = 10, int $perHourStatusCodesCount = 5, string $tsdb = INFLUXDB): Iterator
+function generateFixtures(int $projectCount = 1, int $duration = DURATION_LAST_DAY, int $perHourUserAgentsCount = 10, int $perHourStatusCodesCount = 5, string $tsdb = ELASTICSEARCH): Iterator
 {
     $projects = generateProjects($projectCount);
     $hours = generateHours($duration);

@@ -1,9 +1,5 @@
 CURRENT_DIR=$(shell pwd)
 
-install-influxdb:
-	docker network create bench_influxdb && \
-	docker run -p 18086:8086 -v $(CURRENT_DIR)/influxdb:/var/lib/influxdb --name bench_influxdb -d -e INFLUXDB_DB=rio --net=bench_influxdb influxdb && \
-	docker run -p 18888:8888 --name bench_chronograf -d --net=bench_influxdb chronograf --influxdb-url=http://bench_influxdb:8086
 
 install-elasticsearch:
 	docker network create bench_elasticsearch && \
@@ -13,27 +9,18 @@ install-elasticsearch:
 install: install-influxdb install-elasticsearch
 	composer install
 
-start-influxdb:
-	docker start bench_influxdb bench_chronograf
 
 start-elasticsearch:
 	docker start bench_elasticsearch bench_kibana
 
 start: start-influxdb start-elasticsearch
 
-stop-influxdb:
-	docker stop bench_influxdb bench_chronograf > /dev/null 2>&1 || true
 
 stop-elasticsearch:
 	docker stop bench_elasticsearch bench_kibana > /dev/null 2>&1 || true
 
 stop: stop-influxdb stop-elasticsearch
 
-clean-influxdb: stop-influxdb
-	docker rm bench_influxdb bench_chronograf > /dev/null 2>&1 || true
-	sleep 5
-	docker network rm bench_influxdb > /dev/null 2>&1 || true
-	rm -rf ./influxdb && mkdir influxdb && touch influxdb/.gitkeep
 
 clean-elasticsearch: stop-elasticsearch
 	docker rm bench_elasticsearch bench_kibana > /dev/null 2>&1 || true

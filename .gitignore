@@ -2,7 +2,5 @@
 vendor/
 
 # docker volume files
-/influxdb/*
-!/influxdb/.gitkeep
 /elasticsearch/*
 !/elasticsearch/.gitkeep
