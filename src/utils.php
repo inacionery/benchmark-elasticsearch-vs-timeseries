@@ -2,8 +2,9 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-const TIMESCALEDB = 'TimescaleDB';
 const ELASTICSEARCH = 'Elasticsearch';
+const MEMSQL = 'MemSQL';
+const TIMESCALEDB = 'TimescaleDB';
 
 const STATUS_CODES_TYPE_INFORMATION = '1xx';
 const STATUS_CODES_TYPE_SUCCESS = '2xx';
