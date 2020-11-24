@@ -6,7 +6,10 @@ require_once __DIR__ . '/../utils.php';
 
 use Amp\Postgres;
 
+$users = isset($argv[1]) ? $argv[1] : 10;
+
 Amp\Loop::run(function () {
+    global $users;
     $config = Postgres\ConnectionConfig::fromString('host=localhost user=postgres password=password port=15432');
 
     $connection = yield Postgres\connect($config);
@@ -16,13 +19,11 @@ Amp\Loop::run(function () {
     yield $connection->query("CREATE TABLESPACE page LOCATION '/var/lib/postgresql/database'");
     yield $connection->query("CREATE TABLE page (asset BOOLEAN, bounce BIGINT, browserName TEXT, canonicalUrl TEXT, channelId TEXT, city TEXT, contentLanguageId TEXT, country TEXT, ctaClicks BIGINT, dataSourceId TEXT, deviceType TEXT, directAccess BIGINT, directAccessDates TIMESTAMPTZ[], engagementScore DECIMAL, entrances BIGINT, eventDate TIMESTAMPTZ, exits BIGINT, experienceId TEXT, experimentId TEXT, firstEventDate TIMESTAMPTZ, formSubmissions BIGINT, indirectAccess BIGINT, indirectAccessDates TIMESTAMPTZ[], individualId TEXT, interactionDates TIMESTAMPTZ[], knownIndividual BOOLEAN, lastEventDate TIMESTAMPTZ, modifiedDate TIMESTAMPTZ, pageScrollsDepth INTEGER, pageScrollsEventDate TIMESTAMPTZ, platformName TEXT, primaryKey TEXT, reads BIGINT, region TEXT, searchTerm TEXT, segmentNames TEXT[], sessionId TEXT, timeOnPage BIGINT, title TEXT, url TEXT, userId TEXT, variantId TEXT, views BIGINT) TABLESPACE page");
     yield $connection->query("SELECT create_hypertable('page', 'eventdate')");
-    yield $connection->query("CREATE MATERIALIZED VIEW one_hour AS SELECT time_bucket('1 hours', eventDate) AS one_hour, url, title, dataSourceId, SUM(views) AS views, COUNT(DISTINCT sessionId) AS sessions_count, SUM(exits) AS exits_field,	 COUNT(DISTINCT individualId) AS users_count, ARRAY_AGG(individualId) AS individualIds, COUNT(DISTINCT CASE WHEN individualId IS NULL THEN sessionId END) AS missing_count, SUM(entrances) AS entrances, SUM(bounce) AS bounce_field, AVG(timeOnPage) AS avgTimeOnPage,	 AVG(engagementScore) AS avgEngagementScore, CASE WHEN COUNT(DISTINCT sessionId) > 0 THEN SUM(bounce) / COUNT(DISTINCT sessionId) ELSE 0 END AS bounce, (COUNT(DISTINCT CASE WHEN individualId IS NULL THEN sessionId END) + COUNT(DISTINCT individualId)) AS visitors, CASE WHEN COUNT(DISTINCT sessionId) > 0 THEN SUM(exits) / COUNT(DISTINCT sessionId) ELSE 0 END AS exits FROM page GROUP BY one_hour, url, title, dataSourceId");
-    yield $connection->query("CREATE MATERIALIZED VIEW one_hour_url AS SELECT time_bucket('1 hours', eventDate) AS one_hour, url FROM page GROUP BY one_hour, url");
 
     $count = 0;
     $values = "";
     $start = microtime(true);
-    foreach (generatePages(1, DURATION_LAST_MONTH, 1) as $page) {
+    foreach (generatePages($users, 6 * DURATION_LAST_MONTH, 5) as $page) {
 
         $values .= "(" . $page['asset'] . "," . $page['bounce'] . ",'" . escapeSlashes($page['browserName']) . "','" . $page['canonicalUrl'] . "','" . $page['channelId'] . "','" . escapeSlashes($page['city']) . "','" . $page['contentLanguageId'] . "','" . escapeSlashes($page['country']) . "'," . $page['ctaClicks'] . ",'" . $page['dataSourceId'] . "','" . escapeSlashes($page['deviceType']) . "'," . $page['directAccess'] . ",'" . printArray(array_map(function ($date) {
             return formatDate($date);
@@ -50,16 +51,35 @@ Amp\Loop::run(function () {
     $end = microtime(true);
     $IngestionTime = $end - $start;
 
-    echo "[TimescaleDB] Ingestion time: $executionTime\r\n";
+    echo "[TimescaleDB] Ingestion time: $IngestionTime\r\n";
 
     $start = microtime(true);
-    yield $connection->query("REFRESH MATERIALIZED VIEW one_hour");
-    yield $connection->query("REFRESH MATERIALIZED VIEW one_hour_url");
+
+    yield $connection->query("CREATE MATERIALIZED VIEW eventDate_one_hour AS SELECT time_bucket( '1 hour', eventDate) AS one_hour, canonicalUrl, title, dataSourceId, individualId, sessionId, SUM(views) AS views, SUM(exits) AS exits, SUM(entrances) AS entrances, SUM(bounce) AS bounces, SUM(timeOnPage) AS timeOnPages, SUM(engagementScore) AS engagementScores, COUNT(*) AS total FROM page GROUP BY one_hour, canonicalUrl, title, dataSourceId, individualId, sessionId");
+    yield $connection->query("CREATE INDEX canonicalUrl_title_dataSourceId_idx ON eventDate_one_hour(canonicalUrl, title, dataSourceId)");
+    yield $connection->query("CREATE INDEX one_hour_canonicalUrl_title_dataSourceId_individualId_sessionId_idx ON eventDate_one_hour(one_hour, canonicalUrl, title, dataSourceId, individualId, sessionId)");
+    yield $connection->query("CREATE INDEX one_hour_canonicalUrl_title_dataSourceId_sessionId_idx ON eventDate_one_hour(one_hour, canonicalUrl, title, dataSourceId, sessionId)");
+    yield $connection->query("CREATE INDEX canonicalUrl_title_dataSourceId_sessionId_idx ON eventDate_one_hour(canonicalUrl, title, dataSourceId, sessionId)");
+    yield $connection->query("CREATE INDEX one_hour_canonicalUrl_title_dataSourceId_idx ON eventDate_one_hour(one_hour, canonicalUrl, title, dataSourceId)");
+    yield $connection->query("CREATE INDEX one_hour_sessionId_idx ON eventDate_one_hour(one_hour, sessionId)");
 
     $end = microtime(true);
-    $executionTime = getTime($end - $start);
 
-    echo "[TimescaleDB] Refresh view: $executionTime\r\n";
+    $materializedTime = $end - $start;
+
+    echo "[TimescaleDB] Create Materialized: $materializedTime\r\n";
+
+    $start = microtime(true);
+    yield $connection->query("REFRESH MATERIALIZED VIEW eventDate_one_hour");
+    $end = microtime(true);
+
+    $refreshMaterializedTime = $end - $start;
+
+    echo "[TimescaleDB] Refresh Materialized: $refreshMaterializedTime\r\n";
+
+    $materialized = $IngestionTime + $materializedTime + $refreshMaterializedTime;
+
+    echo "[TimescaleDB] Materialized: $materialized\r\n";
 });
 
 function escapeSlashes($string)

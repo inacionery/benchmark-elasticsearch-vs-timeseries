@@ -2,7 +2,37 @@ CURRENT_DIR=$(shell pwd)
 LICENSE_KEY = ${LICENSE_KEY}
 
 bench-ac-elasticsearch:
-	time make bench-ingestion-ac-elasticsearch
+	time php ./src/elasticsearch/ingestion-ac.php 10
+	sleep 10
+	time make bench-disk-usage-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time php ./src/elasticsearch/ingestion-ac.php 20
+	sleep 10
+	time make bench-disk-usage-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time php ./src/elasticsearch/ingestion-ac.php 30
+	sleep 10
+	time make bench-disk-usage-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time php ./src/elasticsearch/ingestion-ac.php 40
+	sleep 10
+	time make bench-disk-usage-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time php ./src/elasticsearch/ingestion-ac.php 50
+	sleep 10
+	time make bench-disk-usage-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time make bench-response-time-ac-elasticsearch
+	time php ./src/elasticsearch/ingestion-ac.php 60
 	sleep 10
 	time make bench-disk-usage-ac-elasticsearch
 	time make bench-response-time-ac-elasticsearch
@@ -18,12 +48,43 @@ bench-elasticsearch:
 	time make bench-response-time-elasticsearch
 
 bench-ac-memsql:
-	time make bench-ingestion-ac-memsql
+	time php ./src/memsql/ingestion-ac.php 10
 	sleep 10
 	time make bench-disk-usage-ac-memsql
 	time make bench-response-time-ac-memsql
 	time make bench-response-time-ac-memsql
 	time make bench-response-time-ac-memsql
+	time php ./src/memsql/ingestion-ac.php 20
+	sleep 10
+	time make bench-disk-usage-ac-memsql
+	time make bench-response-time-ac-memsql
+	time make bench-response-time-ac-memsql
+	time make bench-response-time-ac-memsql
+	time php ./src/memsql/ingestion-ac.php 30
+	sleep 10
+	time make bench-disk-usage-ac-memsql
+	time make bench-response-time-ac-memsql
+	time make bench-response-time-ac-memsql
+	time make bench-response-time-ac-memsql
+	time php ./src/memsql/ingestion-ac.php 40
+	sleep 10
+	time make bench-disk-usage-ac-memsql
+	time make bench-response-time-ac-memsql
+	time make bench-response-time-ac-memsql
+	time make bench-response-time-ac-memsql
+	time php ./src/memsql/ingestion-ac.php 50
+	sleep 10
+	time make bench-disk-usage-ac-memsql
+	time make bench-response-time-ac-memsql
+	time make bench-response-time-ac-memsql
+	time make bench-response-time-ac-memsql
+	time php ./src/memsql/ingestion-ac.php 60
+	sleep 10
+	time make bench-disk-usage-ac-memsql
+	time make bench-response-time-ac-memsql
+	time make bench-response-time-ac-memsql
+	time make bench-response-time-ac-memsql
+
 
 bench-memsql:
 	time make bench-ingestion-memsql
@@ -34,12 +95,43 @@ bench-memsql:
 	time make bench-response-time-memsql
 
 bench-ac-timescaledb:
-	time make bench-ingestion-ac-timescaledb
+	time php ./src/timescaledb/ingestion-ac.php 10
 	sleep 10
 	time make bench-disk-usage-timescaledb
 	time make bench-response-time-ac-timescaledb
 	time make bench-response-time-ac-timescaledb
 	time make bench-response-time-ac-timescaledb
+	time php ./src/timescaledb/ingestion-ac.php 20
+	sleep 10
+	time make bench-disk-usage-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time php ./src/timescaledb/ingestion-ac.php 30
+	sleep 10
+	time make bench-disk-usage-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time php ./src/timescaledb/ingestion-ac.php 40
+	sleep 10
+	time make bench-disk-usage-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time php ./src/timescaledb/ingestion-ac.php 50
+	sleep 10
+	time make bench-disk-usage-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time php ./src/timescaledb/ingestion-ac.php 60
+	sleep 10
+	time make bench-disk-usage-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+	time make bench-response-time-ac-timescaledb
+
 
 bench-timescaledb:
 	time make bench-ingestion-timescaledb
@@ -125,12 +217,12 @@ install-elasticsearch:
 
 install-memsql:
 	docker network create bench_memsql && \
-	docker run -p 13306:3306 -p 18080:8080 --name bench_memsql -d -e LICENSE_KEY=$(LICENSE_KEY) --net bench_memsql memsql/cluster-in-a-box:centos-7.1.11-6c108deb15-2.0.2-1.8.0 && \
+	docker run -p 13306:3306 -p 18080:8080 --name bench_memsql -d -e LICENSE_KEY=$(LICENSE_KEY) --net bench_memsql memsql/cluster-in-a-box:latest && \
 	docker start bench_memsql
 
 install-timescaledb:
 	docker network create bench_timescaledb && \
-	docker run -p 15432:5432 -v $(CURRENT_DIR)/timescaledb:/var/lib/postgresql/database --name bench_timescaledb -d -e POSTGRES_PASSWORD=password --net=bench_timescaledb timescale/timescaledb:latest-pg12
+	docker run -p 15432:5432 -v $(CURRENT_DIR)/timescaledb:/var/lib/postgresql/database --name bench_timescaledb -d -e POSTGRES_PASSWORD=password --net=bench_timescaledb timescale/timescaledb:2.0.0-rc3-pg12
 
 install: install-elasticsearch install-memsql install-timescaledb
 	composer install
@@ -139,7 +231,7 @@ start-elasticsearch:
 	docker start bench_elasticsearch
 
 start-memsql:
-	docker start bench_elasticsearch
+	docker start bench_memsql
 
 start-timescaledb:
 	docker start bench_timescaledb

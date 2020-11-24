@@ -7,6 +7,8 @@ require_once __DIR__ . '/../utils.php';
 use Elastica\Client;
 use Elastica\Document;
 
+$users = isset($argv[1]) ? $argv[1] : 10;
+
 $elasticaClient = new Client([
 	'host' => 'localhost',
 	'port' => 19200,
@@ -182,28 +184,7 @@ $index->create([
 	],
 	'settings' => [
 		'index' => [
-			'search' => [
-				'slowlog' => [
-					'threshold' => [
-						'fetch' => [
-							'debug' => '0s'
-						],
-						'query' => [
-							'debug' => '0s'
-						]
-					]
-				]
-			],
-			'indexing' => [
-				'slowlog' => [
-					'threshold' => [
-						'index' => [
-							'debug' => '0s'
-						]
-					]
-				]
-			],
-			'number_of_shards' => '1',
+			'number_of_shards' => '3',
 			'analysis' => [
 				'normalizer' => [
 					'folding_normalizer' => [
@@ -227,7 +208,7 @@ $index->create([
 
 $docs = [];
 $start = microtime(true);
-foreach (generatePages(1, DURATION_LAST_MONTH, 1) as $page) {
+foreach (generatePages($users, 6 * DURATION_LAST_MONTH, 5) as $page) {
 	$docs[] = new Document('', [
 		'asset' => $page['asset'],
 		'bounce' => $page['bounce'],

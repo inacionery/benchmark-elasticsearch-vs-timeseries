@@ -29,6 +29,17 @@ foreach ($hours as $i => $hour) {
             'bool' => [
                 'filter' => [
                     [
+                        'exists' => [
+                            'field' => 'sessionId',
+                            'boost' => 1
+                        ]
+                    ],
+                    [
+                        'match_all' => [
+                            'boost' => 1
+                        ]
+                    ],
+                    [
                         'range' => [
                             'eventDate' => [
                                 'from' => $from,
@@ -36,15 +47,16 @@ foreach ($hours as $i => $hour) {
                                 'include_lower' => true,
                                 'include_upper' => false,
                                 'time_zone' => 'UTC',
-                                'boost' => 1.0
+                                'boost' => 1
                             ]
                         ]
                     ]
                 ],
                 'adjust_pure_negative' => true,
-                'boost' => 1.0
+                'boost' => 1
             ]
         ],
+        'track_total_hits' => 2147483647,
         'aggregations' => [
             'ranges' => [
                 'date_range' => [
@@ -63,13 +75,10 @@ foreach ($hours as $i => $hour) {
                     'terms' => [
                         'terms' => [
                             'script' => [
-                                'source' => 'doc[params.assetIdFieldName].value + \'@\' + doc[\'title\'].value + \'@\' + doc[\'dataSourceId\'].value',
-                                'lang' => 'painless',
-                                'params' => [
-                                    'assetIdFieldName' => 'url'
-                                ]
+                                'source' => 'doc.canonicalUrl.value + \'@\' + doc.title.value + \'@\' + doc.dataSourceId.value',
+                                'lang' => 'painless'
                             ],
-                            'size' => 811,
+                            'size' => 2147483647,
                             'min_doc_count' => 1,
                             'shard_min_doc_count' => 0,
                             'show_term_doc_count_error' => false,
@@ -83,20 +92,29 @@ foreach ($hours as $i => $hour) {
                             ]
                         ],
                         'aggregations' => [
-                            'views' => [
+                            'entrances' => [
                                 'sum' => [
-                                    'field' => 'views'
-                                ]
-                            ],
-                            'sessions_count' => [
-                                'cardinality' => [
-                                    'field' => 'sessionId',
-                                    'precision_threshold' => 1000
+                                    'field' => 'entrances'
                                 ]
                             ],
                             'exits_field' => [
                                 'sum' => [
                                     'field' => 'exits'
+                                ]
+                            ],
+                            'bounce_field' => [
+                                'sum' => [
+                                    'field' => 'bounce'
+                                ]
+                            ],
+                            'avgEngagementScore' => [
+                                'avg' => [
+                                    'field' => 'engagementScore'
+                                ]
+                            ],
+                            'views' => [
+                                'sum' => [
+                                    'field' => 'views'
                                 ]
                             ],
                             'total' => [
@@ -110,37 +128,20 @@ foreach ($hours as $i => $hour) {
                                                         'to' => null,
                                                         'include_lower' => false,
                                                         'include_upper' => true,
-                                                        'boost' => 1.0
+                                                        'boost' => 1
                                                     ]
                                                 ]
                                             ]
                                         ],
                                         'adjust_pure_negative' => true,
-                                        'boost' => 1.0
+                                        'boost' => 1
                                     ]
                                 ],
                                 'aggregations' => [
                                     'users_count' => [
                                         'cardinality' => [
                                             'field' => 'individualId',
-                                            'precision_threshold' => 1000
-                                        ]
-                                    ],
-                                    'individualIds' => [
-                                        'terms' => [
-                                            'field' => 'individualId',
-                                            'size' => 2147483647,
-                                            'min_doc_count' => 1,
-                                            'shard_min_doc_count' => 0,
-                                            'show_term_doc_count_error' => false,
-                                            'order' => [
-                                                [
-                                                    '_count' => 'desc'
-                                                ],
-                                                [
-                                                    '_key' => 'asc'
-                                                ]
-                                            ]
+                                            'precision_threshold' => 2000
                                         ]
                                     ],
                                     'missing_count' => [
@@ -158,14 +159,10 @@ foreach ($hours as $i => $hour) {
                                     ]
                                 ]
                             ],
-                            'entrances' => [
-                                'sum' => [
-                                    'field' => 'entrances'
-                                ]
-                            ],
-                            'bounce_field' => [
-                                'sum' => [
-                                    'field' => 'bounce'
+                            'sessions_count' => [
+                                'cardinality' => [
+                                    'field' => 'sessionId',
+                                    'precision_threshold' => 2000
                                 ]
                             ],
                             'avgTimeOnPage' => [
@@ -173,19 +170,14 @@ foreach ($hours as $i => $hour) {
                                     'field' => 'timeOnPage'
                                 ]
                             ],
-                            'avgEngagementScore' => [
-                                'avg' => [
-                                    'field' => 'engagementScore'
-                                ]
-                            ],
-                            'bounce' => [
+                            'exits' => [
                                 'bucket_script' => [
                                     'buckets_path' => [
                                         'sessions_count' => 'sessions_count',
-                                        'bounce_field' => 'bounce_field'
+                                        'exits_field' => 'exits_field'
                                     ],
                                     'script' => [
-                                        'source' => 'params.sessions_count > 0 ? params.bounce_field / params.sessions_count : 0',
+                                        'source' => 'params.sessions_count > 0 ? params.exits_field / params.sessions_count : 0',
                                         'lang' => 'painless'
                                     ],
                                     'gap_policy' => 'skip'
@@ -204,14 +196,14 @@ foreach ($hours as $i => $hour) {
                                     'gap_policy' => 'skip'
                                 ]
                             ],
-                            'exits' => [
+                            'bounce' => [
                                 'bucket_script' => [
                                     'buckets_path' => [
                                         'sessions_count' => 'sessions_count',
-                                        'exits_field' => 'exits_field'
+                                        'bounce_field' => 'bounce_field'
                                     ],
                                     'script' => [
-                                        'source' => 'params.sessions_count > 0 ? params.exits_field / params.sessions_count : 0',
+                                        'source' => 'params.sessions_count > 0 ? params.bounce_field / params.sessions_count  : 0',
                                         'lang' => 'painless'
                                     ],
                                     'gap_policy' => 'skip'
@@ -222,7 +214,7 @@ foreach ($hours as $i => $hour) {
                                     'sort' => [
                                         [
                                             'visitors' => [
-                                                'order' => 'desc',
+                                                'order' => 'DESC',
                                                 'unmapped_type' => 'long'
                                             ]
                                         ]
@@ -230,23 +222,6 @@ foreach ($hours as $i => $hour) {
                                     'from' => 0,
                                     'size' => 20,
                                     'gap_policy' => 'SKIP'
-                                ]
-                            ]
-                        ]
-                    ],
-                    'urls' => [
-                        'terms' => [
-                            'field' => 'url',
-                            'size' => 2147483647,
-                            'min_doc_count' => 1,
-                            'shard_min_doc_count' => 0,
-                            'show_term_doc_count_error' => false,
-                            'order' => [
-                                [
-                                    '_count' => 'desc'
-                                ],
-                                [
-                                    '_key' => 'asc'
                                 ]
                             ]
                         ]

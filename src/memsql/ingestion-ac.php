@@ -7,7 +7,10 @@ require_once __DIR__ . '/../utils.php';
 
 use Amp\Mysql;
 
+$users = isset($argv[1]) ? $argv[1] : 10;
+
 Amp\Loop::run(function () {
+    global $users;
     $config = Mysql\ConnectionConfig::fromString('host=localhost user=root port=13306');
 
     $connection = yield Mysql\connect($config);
@@ -16,12 +19,12 @@ Amp\Loop::run(function () {
     yield $connection->query("CREATE DATABASE page");
     yield $connection->query("USE page");
     yield $connection->query("DROP TABLE IF EXISTS page");
-    yield $connection->query("CREATE TABLE page (asset BOOLEAN, bounce BIGINT, browserName TEXT, canonicalUrl TEXT, channelId TEXT, city TEXT, contentLanguageId TEXT, country TEXT, ctaClicks BIGINT, dataSourceId TEXT, deviceType TEXT, directAccess BIGINT, directAccessDates JSON, engagementScore DECIMAL, entrances BIGINT, eventDate DATETIME SERIES TIMESTAMP, exits BIGINT, experienceId TEXT, experimentId TEXT, firstEventDate DATETIME, formSubmissions BIGINT, indirectAccess BIGINT, indirectAccessDates JSON, individualId TEXT, interactionDates JSON, knownIndividual BOOLEAN, lastEventDate DATETIME, modifiedDate DATETIME, pageScrollsDepth INTEGER, pageScrollsEventDate DATETIME, platformName TEXT, primaryKey TEXT, _reads BIGINT, region TEXT, searchTerm TEXT, segmentNames JSON, sessionId TEXT, timeOnPage BIGINT, title TEXT, url TEXT, userId TEXT, variantId TEXT, views BIGINT, KEY (`url`, `title`, `dataSourceId`) USING CLUSTERED COLUMNSTORE, SHARD KEY (`eventDate`))");
+    yield $connection->query("CREATE TABLE page (asset BOOLEAN, bounce BIGINT, browserName TEXT, canonicalUrl TEXT, channelId TEXT, city TEXT, contentLanguageId TEXT, country TEXT, ctaClicks BIGINT, dataSourceId TEXT, deviceType TEXT, directAccess BIGINT, directAccessDates JSON, engagementScore FLOAT, entrances BIGINT, eventDate DATETIME SERIES TIMESTAMP, eventHour AS time_bucket('1h', eventDate) PERSISTED DATETIME, exits BIGINT, experienceId TEXT, experimentId TEXT, firstEventDate DATETIME, formSubmissions BIGINT, indirectAccess BIGINT, indirectAccessDates JSON, individualId TEXT, interactionDates JSON, knownIndividual BOOLEAN, lastEventDate DATETIME, modifiedDate DATETIME, pageScrollsDepth INTEGER, pageScrollsEventDate DATETIME, platformName TEXT, primaryKey TEXT, _reads BIGINT, region TEXT, searchTerm TEXT, segmentNames JSON, sessionId TEXT, timeOnPage BIGINT, title TEXT, url TEXT, userId TEXT, variantId TEXT, views BIGINT, KEY (`canonicalUrl`, `title`, `dataSourceId`) USING CLUSTERED COLUMNSTORE, SHARD KEY (`canonicalUrl`))");
 
     $count = 0;
     $values = "";
     $start = microtime(true);
-    foreach (generatePages(1, DURATION_LAST_MONTH, 1) as $page) {
+    foreach (generatePages($users, 6 * DURATION_LAST_MONTH, 5) as $page) {
 
         $values .= "(" . $page['asset'] . "," . $page['bounce'] . ",'" . escapeSlashes($page['browserName']) . "','" . $page['canonicalUrl'] . "','" . $page['channelId'] . "','" . escapeSlashes($page['city']) . "','" . $page['contentLanguageId'] . "','" . escapeSlashes($page['country']) . "'," . $page['ctaClicks'] . ",'" . $page['dataSourceId'] . "','" . escapeSlashes($page['deviceType']) . "'," . $page['directAccess'] . ",'" . printArray(array_map(function ($date) {
             return formatDate($date);
