@@ -259,6 +259,18 @@ function generateHour(DateTimeImmutable $hour = null): DateTimeImmutable
 
     return $hour->modify("+$minute minute +$second second");
 }
+function generateDays(int $type = 1)
+{
+    $days = [];
+
+    $today = new DateTimeImmutable();
+
+    for ($i = 0; $i < $type; $i++) {
+        $days[] = $today->setTime(0, 0)->modify("-$i day");
+    }
+
+    return $days;
+}
 
 function generateHours(int $type = DURATION_LAST_DAY, DateTimeImmutable $hour = null)
 {
