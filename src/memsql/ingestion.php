@@ -42,7 +42,7 @@ Amp\Loop::run(function () {
     yield $connection->query("OPTIMIZE TABLE statistic FULL");
 
     $end = microtime(true);
-    $executionTime = getTime($end - $start);
+    $executionTime = $end - $start;
 
     echo "[MemSQL] Ingestion time: $executionTime\r\n";
 });

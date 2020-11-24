@@ -21,7 +21,7 @@ Amp\Loop::run(function () {
     }
 
     $end = microtime(true);
-    $executionTime = getTime($end - $start);
+    $executionTime = $end - $start;
 
     echo "[TimescaleDB] Response time: $executionTime\r\n";
 });

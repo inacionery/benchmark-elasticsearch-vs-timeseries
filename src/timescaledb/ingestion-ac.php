@@ -48,7 +48,7 @@ Amp\Loop::run(function () {
     }
 
     $end = microtime(true);
-    $executionTime = getTime($end - $start);
+    $IngestionTime = $end - $start;
 
     echo "[TimescaleDB] Ingestion time: $executionTime\r\n";
 

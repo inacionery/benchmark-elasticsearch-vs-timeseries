@@ -71,6 +71,6 @@ foreach ($hours as $i => $hour) {
 }
 
 $end = microtime(true);
-$executionTime = getTime($end - $start);
+$executionTime = $end - $start;
 
 echo "[Elasticsearch] Response time: $executionTime\r\n";

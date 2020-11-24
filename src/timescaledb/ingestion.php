@@ -41,7 +41,7 @@ Amp\Loop::run(function () {
     }
 
     $end = microtime(true);
-    $executionTime = getTime($end - $start);
+    $executionTime = $end - $start;
 
     echo "[TimescaleDB] Ingestion time: $executionTime\r\n";
 
@@ -49,7 +49,7 @@ Amp\Loop::run(function () {
     yield $connection->query("REFRESH MATERIALIZED VIEW one_hour");
 
     $end = microtime(true);
-    $executionTime = getTime($end - $start);
+    $executionTime = $end - $start;
 
     echo "[TimescaleDB] Refresh view: $executionTime\r\n";
 });

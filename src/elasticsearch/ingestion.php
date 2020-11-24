@@ -83,6 +83,6 @@ if ($docs) {
 $index->refresh();
 
 $end = microtime(true);
-$executionTime = getTime($end - $start);
+$executionTime = $end - $start;
 
 echo "[Elasticsearch] Ingestion time: $executionTime\r\n";
