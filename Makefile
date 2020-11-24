@@ -1,6 +1,14 @@
 CURRENT_DIR=$(shell pwd)
 LICENSE_KEY = ${LICENSE_KEY}
 
+bench-clickhouse:
+	time make bench-ingestion-clickhouse
+	time make bench-disk-usage-clickhouse
+	time make bench-response-time-clickhouse
+	time make bench-response-time-clickhouse
+	time make bench-response-time-clickhouse
+	make clean-clickhouse-store
+
 bench-ac-chart-elasticsearch:
 	time php ./src/elasticsearch/ingestion-ac.php 10
 	sleep 10
@@ -253,6 +261,9 @@ bench-timescaledb:
 	time make bench-response-time-timescaledb
 	time make bench-response-time-timescaledb
 
+bench-disk-usage-clickhouse:
+	du -shm ./clickhouse
+
 bench-disk-usage-ac-elasticsearch:
 	curl -s -XGET "http://localhost:19200/_cat/indices?v" | grep page
 
@@ -267,6 +278,9 @@ bench-disk-usage-memsql:
 
 bench-disk-usage-timescaledb:
 	du -shm ./timescaledb
+
+bench-ingestion-clickhouse:
+	php ./src/clickhouse/ingestion.php
 
 bench-ingestion-ac-elasticsearch:
 	php ./src/elasticsearch/ingestion-ac.php
@@ -291,6 +305,9 @@ bench-ingestion-ac-chart-timescaledb:
 
 bench-ingestion-timescaledb:
 	php ./src/timescaledb/ingestion.php
+
+bench-response-time-clickhouse:
+	php ./src/clickhouse/response-time.php
 
 bench-response-time-ac-elasticsearch:
 	php ./src/elasticsearch/response-time-ac.php
@@ -319,6 +336,16 @@ bench-response-time-ac-chart-timescaledb:
 bench-response-time-timescaledb:
 	php ./src/timescaledb/response-time.php
 
+clean-clickhouse-store:
+	rm -rf ./clickhouse/store
+	make restart-clickhouse
+
+clean-clickhouse: stop-clickhouse
+	docker rm bench_clickhouse > /dev/null 2>&1 || true
+	sleep 5
+	docker network rm bench_clickhouse > /dev/null 2>&1 || true
+	rm -rf ./clickhouse && mkdir clickhouse && touch clickhouse/.gitkeep
+
 clean-elasticsearch: stop-elasticsearch
 	docker rm bench_elasticsearch > /dev/null 2>&1 || true
 	sleep 5
@@ -336,7 +363,11 @@ clean-timescaledb: stop-timescaledb
 	docker network rm bench_timescaledb > /dev/null 2>&1 || true
 	rm -rf ./timescaledb && mkdir timescaledb && touch timescaledb/.gitkeep
 
-clean: clean-elasticsearch clean-memsql clean-timescaledb
+clean: clean-clickhouse clean-elasticsearch clean-memsql clean-timescaledb
+
+install-clickhouse:
+	docker network create bench_clickhouse && \
+	docker run -p 18123:8123 -p 19000:9000 -p 19009:9009 -d --name bench_clickhouse --ulimit nofile=262144:262144 -v $(CURRENT_DIR)/clickhouse:/var/lib/clickhouse yandex/clickhouse-server
 
 install-elasticsearch:
 	docker network create bench_elasticsearch && \
@@ -351,8 +382,14 @@ install-timescaledb:
 	docker network create bench_timescaledb && \
 	docker run -p 15432:5432 -v $(CURRENT_DIR)/timescaledb:/var/lib/postgresql/database --name bench_timescaledb -d -e POSTGRES_PASSWORD=password --net=bench_timescaledb timescale/timescaledb:2.0.0-rc3-pg12
 
-install: install-elasticsearch install-memsql install-timescaledb
+install: install-clickhouse install-elasticsearch install-memsql install-timescaledb
 	composer install
+
+restart-clickhouse:
+	docker restart bench_clickhouse
+
+start-clickhouse:
+	docker start bench_clickhouse
 
 start-elasticsearch:
 	docker start bench_elasticsearch
@@ -363,7 +400,10 @@ start-memsql:
 start-timescaledb:
 	docker start bench_timescaledb
 
-start: start-elasticsearch start-memsql start-timescaledb
+start: start-clickhouse start-elasticsearch start-memsql start-timescaledb
+
+stop-clickhouse:
+	docker stop bench_clickhouse > /dev/null 2>&1 || true
 
 stop-elasticsearch:
 	docker stop bench_elasticsearch > /dev/null 2>&1 || true
@@ -374,4 +414,4 @@ stop-memsql:
 stop-timescaledb:
 	docker stop bench_timescaledb > /dev/null 2>&1 || true
 
-stop: stop-elasticsearch stop-memsql stop-timescaledb
+stop: stop-clickhouse stop-elasticsearch stop-memsql stop-timescaledb

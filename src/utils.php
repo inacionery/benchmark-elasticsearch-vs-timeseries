@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+const CLICKHOUSEDB = 'ClickHouseDB';
 const ELASTICSEARCH = 'Elasticsearch';
 const MEMSQL = 'MemSQL';
 const TIMESCALEDB = 'TimescaleDB';

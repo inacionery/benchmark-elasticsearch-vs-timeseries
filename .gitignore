@@ -2,6 +2,8 @@
 vendor/
 
 # docker volume files
+/clickhouse/*
+!/clickhouse/.gitkeep
 /timescaledb/*
 !/timescaledb/.gitkeep
 /elasticsearch/*

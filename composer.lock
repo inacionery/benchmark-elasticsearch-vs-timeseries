@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4af09d77855188ffcb4ed33ffb363d44",
+    "content-hash": "5f71374b2b5511fda45602b7942cc990",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1457,6 +1457,61 @@
                 "search"
             ],
             "time": "2020-06-10T12:07:24+00:00"
+        },
+        {
+            "name": "smi2/phpclickhouse",
+            "version": "1.3.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smi2/phpClickHouse.git",
+                "reference": "4801b0c8badf44f256b91e9da11b2000c22b5870"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smi2/phpClickHouse/zipball/4801b0c8badf44f256b91e9da11b2000c22b5870",
+                "reference": "4801b0c8badf44f256b91e9da11b2000c22b5870",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^5.0",
+                "phpstan/phpstan": "^0.10.3",
+                "phpunit/phpunit": "^7",
+                "sebastian/comparator": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ClickHouseDB\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Strykhar",
+                    "email": "isublimity@gmail.com",
+                    "homepage": "https://github.com/isublimity"
+                }
+            ],
+            "description": "PHP ClickHouse Client",
+            "homepage": "https://github.com/smi2/phpClickHouse",
+            "keywords": [
+                "clickhouse",
+                "client",
+                "curl",
+                "driver",
+                "http",
+                "http client",
+                "php"
+            ],
+            "time": "2020-09-29T12:45:39+00:00"
         }
     ],
     "packages-dev": [],
