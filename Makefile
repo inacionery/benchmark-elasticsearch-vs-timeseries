@@ -249,7 +249,7 @@ install-memsql:
 
 install-timescaledb:
 	docker network create bench_timescaledb && \
-	docker run -p 15432:5432 -v $(CURRENT_DIR)/timescaledb:/var/lib/postgresql/database --name bench_timescaledb -d -e POSTGRES_PASSWORD=password --net=bench_timescaledb timescale/timescaledb:2.0.0-rc3-pg12
+	docker run -p 15432:5432 -v $(CURRENT_DIR)/timescaledb:/var/lib/postgresql/database --name bench_timescaledb -d -e POSTGRES_PASSWORD=password -e TS_TUNE_MEMORY=8GB -e TS_TUNE_NUM_CPUS=16 --net=bench_timescaledb timescale/timescaledb:2.0.0-rc3-pg12
 
 install: install-clickhouse install-elasticsearch install-memsql install-timescaledb
 	composer install
