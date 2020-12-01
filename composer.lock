@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f71374b2b5511fda45602b7942cc990",
+    "content-hash": "7156006e192b07ef4246576c8b1920a6",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1191,6 +1191,50 @@
             ],
             "description": "Fork of guzzle/RingPHP (abandoned) to be used with elasticsearch-php",
             "time": "2020-02-14T23:51:21+00:00"
+        },
+        {
+            "name": "halaxa/json-machine",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/halaxa/json-machine.git",
+                "reference": "b99d7a9a1efc8ba633da4581cf079b3a6f1ed219"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/halaxa/json-machine/zipball/b99d7a9a1efc8ba633da4581cf079b3a6f1ed219",
+                "reference": "b99d7a9a1efc8ba633da4581cf079b3a6f1ed219",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^6",
+                "phpunit/phpunit": "^5.7.27"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JsonMachine\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Halaxa",
+                    "email": "filip@halaxa.cz"
+                }
+            ],
+            "description": "Efficient, easy-to-use and fast JSON pull parser",
+            "time": "2020-11-09T13:28:55+00:00"
         },
         {
             "name": "kelunik/certificate",

@@ -6,8 +6,7 @@ require_once __DIR__ . '/../utils.php';
 
 use Elastica\Client;
 use Elastica\Document;
-
-$users = isset($argv[1]) ? $argv[1] : 10;
+use \JsonMachine\JsonMachine;
 
 $elasticaClient = new Client([
 	'host' => 'localhost',
@@ -206,78 +205,49 @@ $index->create([
 	]
 ], true);
 
-$docs = [];
 $start = microtime(true);
-foreach (generatePages($users, 6 * DURATION_LAST_MONTH, 5) as $page) {
-	$docs[] = new Document('', [
-		'asset' => $page['asset'],
-		'bounce' => $page['bounce'],
-		'browserName' => $page['browserName'],
-		'canonicalUrl' => $page['canonicalUrl'],
-		'channelId' => $page['channelId'],
-		'city' => $page['city'],
-		'contentLanguageId' => $page['contentLanguageId'],
-		'country' => $page['country'],
-		'ctaClicks' => $page['ctaClicks'],
-		'dataSourceId' => $page['dataSourceId'],
-		'deviceType' => $page['deviceType'],
-		'directAccess' => $page['directAccess'],
-		'directAccessDates' => array_map(function ($date) {
-			return $date->format(DateTime::RFC3339);
-		}, $page['directAccessDates']),
-		'engagementScore' => $page['engagementScore'],
-		'entrances' => $page['entrances'],
-		'eventDate' => $page['eventDate']->format(DateTime::RFC3339),
-		'exits' => $page['exits'],
-		'experienceId' => $page['experienceId'],
-		'experimentId' => $page['experimentId'],
-		'firstEventDate' => $page['firstEventDate']->format(DateTime::RFC3339),
-		'formSubmissions' => $page['formSubmissions'],
-		'indirectAccess' => $page['indirectAccess'],
-		'indirectAccessDates' => array_map(function ($date) {
-			return $date->format(DateTime::RFC3339);
-		}, $page['indirectAccessDates']),
-		'individualId' => $page['individualId'],
-		'interactionDates' => array_map(function ($date) {
-			return $date->format(DateTime::RFC3339);
-		}, $page['interactionDates']),
-		'knownIndividual' => $page['knownIndividual'],
-		'lastEventDate' => $page['lastEventDate']->format(DateTime::RFC3339),
-		'modifiedDate' => $page['modifiedDate']->format(DateTime::RFC3339),
-		'pageScrolls' => array_map(function ($pageScroll) {
-			if ($pageScroll instanceof DateTimeImmutable) {
-				return $pageScroll->format(DateTime::RFC3339);
-			}
-			return $pageScroll;
-		}, $page['pageScrolls']),
-		'platformName' => $page['platformName'],
-		'primaryKey' => $page['primaryKey'],
-		'reads' => $page['reads'],
-		'region' => $page['region'],
-		'searchTerm' => $page['searchTerm'],
-		'segmentNames' => $page['segmentNames'],
-		'sessionId' => $page['sessionId'],
-		'timeOnPage' => $page['timeOnPage'],
-		'title' => $page['title'],
-		'url' => $page['url'],
-		'userId' => $page['userId'],
-		'variantId' => $page['variantId'],
-		'views' => $page['views'],
-	]);
-
-	if (count($docs) > 10000) {
-		$index->addDocuments($docs);
-		$docs = [];
-	}
-}
-
-if ($docs) {
-	$index->addDocuments($docs);
-}
-
+populate($index, JsonMachine::fromFile("src/ac-database/pages-18-02.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-19-08.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-19-09.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-19-10.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-19-11.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-19-12.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-01.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-02.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-03.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-04.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-05.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-06.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-07.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-08.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-09.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-10.json"));
+populate($index, JsonMachine::fromFile("src/ac-database/pages-20-11.json"));
 $index->refresh();
 
 $end = microtime(true);
 $executionTime = $end - $start;
 
 echo "[Elasticsearch] Ingestion time: $executionTime\r\n";
+
+function populate($index, $pages)
+{
+	$docs = [];
+	foreach ($pages as $key => $page) {
+		$doc = [];
+		foreach ($page['_source'] as $id => $source) {
+			$doc[$id] = $source;
+		}
+
+		$docs[] = new Document($page['_id'], $doc);
+
+		if (count($docs) > 10000) {
+			$index->addDocuments($docs);
+			$docs = [];
+		}
+	}
+
+	if ($docs) {
+		$index->addDocuments($docs);
+	}
+}

@@ -10,76 +10,12 @@ bench-clickhouse:
 	make clean-clickhouse-store
 
 bench-ac-chart-elasticsearch:
-	time php ./src/elasticsearch/ingestion-ac.php 10
-	sleep 10
-	time make bench-disk-usage-ac-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time php ./src/elasticsearch/ingestion-ac.php 20
-	sleep 10
-	time make bench-disk-usage-ac-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time php ./src/elasticsearch/ingestion-ac.php 30
-	sleep 10
-	time make bench-disk-usage-ac-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time php ./src/elasticsearch/ingestion-ac.php 40
-	sleep 10
-	time make bench-disk-usage-ac-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time php ./src/elasticsearch/ingestion-ac.php 50
-	sleep 10
-	time make bench-disk-usage-ac-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time make bench-response-time-ac-chart-elasticsearch
-	time php ./src/elasticsearch/ingestion-ac.php 60
-	sleep 10
 	time make bench-disk-usage-ac-elasticsearch
 	time make bench-response-time-ac-chart-elasticsearch
 	time make bench-response-time-ac-chart-elasticsearch
 	time make bench-response-time-ac-chart-elasticsearch
 
 bench-ac-elasticsearch:
-	time php ./src/elasticsearch/ingestion-ac.php 10
-	sleep 10
-	time make bench-disk-usage-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time php ./src/elasticsearch/ingestion-ac.php 20
-	sleep 10
-	time make bench-disk-usage-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time php ./src/elasticsearch/ingestion-ac.php 30
-	sleep 10
-	time make bench-disk-usage-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time php ./src/elasticsearch/ingestion-ac.php 40
-	sleep 10
-	time make bench-disk-usage-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time php ./src/elasticsearch/ingestion-ac.php 50
-	sleep 10
-	time make bench-disk-usage-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time make bench-response-time-ac-elasticsearch
-	time php ./src/elasticsearch/ingestion-ac.php 60
-	sleep 10
 	time make bench-disk-usage-ac-elasticsearch
 	time make bench-response-time-ac-elasticsearch
 	time make bench-response-time-ac-elasticsearch

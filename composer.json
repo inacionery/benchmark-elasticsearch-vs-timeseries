@@ -4,6 +4,7 @@
         "amphp/postgres": "^1.3",
         "ruflin/elastica": "^7.0",
         "amphp/mysql": "^2.0",
-        "smi2/phpclickhouse": "^1.3"
+        "smi2/phpclickhouse": "^1.3",
+        "halaxa/json-machine": "^0.4.0"
     }
 }

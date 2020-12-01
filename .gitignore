@@ -8,3 +8,4 @@ vendor/
 !/timescaledb/.gitkeep
 /elasticsearch/*
 !/elasticsearch/.gitkeep
+src/ac-database
