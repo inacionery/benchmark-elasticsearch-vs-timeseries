@@ -114,76 +114,12 @@ bench-memsql:
 	time make bench-response-time-memsql
 
 bench-ac-timescaledb:
-	time php ./src/timescaledb/ingestion-ac.php 10
-	sleep 10
-	time make bench-disk-usage-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time php ./src/timescaledb/ingestion-ac.php 20
-	sleep 10
-	time make bench-disk-usage-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time php ./src/timescaledb/ingestion-ac.php 30
-	sleep 10
-	time make bench-disk-usage-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time php ./src/timescaledb/ingestion-ac.php 40
-	sleep 10
-	time make bench-disk-usage-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time php ./src/timescaledb/ingestion-ac.php 50
-	sleep 10
-	time make bench-disk-usage-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time make bench-response-time-ac-timescaledb
-	time php ./src/timescaledb/ingestion-ac.php 60
-	sleep 10
 	time make bench-disk-usage-timescaledb
 	time make bench-response-time-ac-timescaledb
 	time make bench-response-time-ac-timescaledb
 	time make bench-response-time-ac-timescaledb
 
 bench-ac-chart-timescaledb:
-	time php ./src/timescaledb/ingestion-ac-chart.php 10
-	sleep 10
-	time make bench-disk-usage-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time php ./src/timescaledb/ingestion-ac-chart.php 20
-	sleep 10
-	time make bench-disk-usage-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time php ./src/timescaledb/ingestion-ac-chart.php 30
-	sleep 10
-	time make bench-disk-usage-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time php ./src/timescaledb/ingestion-ac-chart.php 40
-	sleep 10
-	time make bench-disk-usage-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time php ./src/timescaledb/ingestion-ac-chart.php 50
-	sleep 10
-	time make bench-disk-usage-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time make bench-response-time-ac-chart-timescaledb
-	time php ./src/timescaledb/ingestion-ac-chart.php 60
-	sleep 10
 	time make bench-disk-usage-timescaledb
 	time make bench-response-time-ac-chart-timescaledb
 	time make bench-response-time-ac-chart-timescaledb
@@ -235,9 +171,6 @@ bench-ingestion-memsql:
 
 bench-ingestion-ac-timescaledb:
 	php ./src/timescaledb/ingestion-ac.php
-
-bench-ingestion-ac-chart-timescaledb:
-	php ./src/timescaledb/ingestion-ac-chart.php
 
 bench-ingestion-timescaledb:
 	php ./src/timescaledb/ingestion.php
