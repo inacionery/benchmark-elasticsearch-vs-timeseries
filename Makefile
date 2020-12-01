@@ -30,76 +30,12 @@ bench-elasticsearch:
 	time make bench-response-time-elasticsearch
 
 bench-ac-memsql:
-	time php ./src/memsql/ingestion-ac.php 10
-	sleep 10
-	time make bench-disk-usage-ac-memsql
-	time make bench-response-time-ac-memsql
-	time make bench-response-time-ac-memsql
-	time make bench-response-time-ac-memsql
-	time php ./src/memsql/ingestion-ac.php 20
-	sleep 10
-	time make bench-disk-usage-ac-memsql
-	time make bench-response-time-ac-memsql
-	time make bench-response-time-ac-memsql
-	time make bench-response-time-ac-memsql
-	time php ./src/memsql/ingestion-ac.php 30
-	sleep 10
-	time make bench-disk-usage-ac-memsql
-	time make bench-response-time-ac-memsql
-	time make bench-response-time-ac-memsql
-	time make bench-response-time-ac-memsql
-	time php ./src/memsql/ingestion-ac.php 40
-	sleep 10
-	time make bench-disk-usage-ac-memsql
-	time make bench-response-time-ac-memsql
-	time make bench-response-time-ac-memsql
-	time make bench-response-time-ac-memsql
-	time php ./src/memsql/ingestion-ac.php 50
-	sleep 10
-	time make bench-disk-usage-ac-memsql
-	time make bench-response-time-ac-memsql
-	time make bench-response-time-ac-memsql
-	time make bench-response-time-ac-memsql
-	time php ./src/memsql/ingestion-ac.php 60
-	sleep 10
 	time make bench-disk-usage-ac-memsql
 	time make bench-response-time-ac-memsql
 	time make bench-response-time-ac-memsql
 	time make bench-response-time-ac-memsql
 
 bench-ac-chart-memsql:
-	time php ./src/memsql/ingestion-ac-chart.php 10
-	sleep 10
-	time make bench-disk-usage-ac-memsql
-	time make bench-response-time-ac-chart-memsql
-	time make bench-response-time-ac-chart-memsql
-	time make bench-response-time-ac-chart-memsql
-	time php ./src/memsql/ingestion-ac-chart.php 20
-	sleep 10
-	time make bench-disk-usage-ac-memsql
-	time make bench-response-time-ac-chart-memsql
-	time make bench-response-time-ac-chart-memsql
-	time make bench-response-time-ac-chart-memsql
-	time php ./src/memsql/ingestion-ac-chart.php 30
-	sleep 10
-	time make bench-disk-usage-ac-memsql
-	time make bench-response-time-ac-chart-memsql
-	time make bench-response-time-ac-chart-memsql
-	time make bench-response-time-ac-chart-memsql
-	time php ./src/memsql/ingestion-ac-chart.php 40
-	sleep 10
-	time make bench-disk-usage-ac-memsql
-	time make bench-response-time-ac-chart-memsql
-	time make bench-response-time-ac-chart-memsql
-	time make bench-response-time-ac-chart-memsql
-	time php ./src/memsql/ingestion-ac-chart.php 50
-	sleep 10
-	time make bench-disk-usage-ac-memsql
-	time make bench-response-time-ac-chart-memsql
-	time make bench-response-time-ac-chart-memsql
-	time make bench-response-time-ac-chart-memsql
-	time php ./src/memsql/ingestion-ac-chart.php 60
-	sleep 10
 	time make bench-disk-usage-ac-memsql
 	time make bench-response-time-ac-chart-memsql
 	time make bench-response-time-ac-chart-memsql
@@ -162,9 +98,6 @@ bench-ingestion-elasticsearch:
 
 bench-ingestion-ac-memsql:
 	php ./src/memsql/ingestion-ac.php
-
-bench-ingestion-ac-chart-memsql:
-	php ./src/memsql/ingestion-ac-chart.php
 
 bench-ingestion-memsql:
 	php ./src/memsql/ingestion.php
