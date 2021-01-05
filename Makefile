@@ -49,6 +49,18 @@ bench-memsql:
 	time make bench-response-time-memsql
 	time make bench-response-time-memsql
 
+bench-ac-postgres:
+	time make bench-disk-usage-postgres
+	time make bench-response-time-ac-postgres
+	time make bench-response-time-ac-postgres
+	time make bench-response-time-ac-postgres
+
+bench-ac-chart-postgres:
+	time make bench-disk-usage-postgres
+	time make bench-response-time-ac-chart-postgres
+	time make bench-response-time-ac-chart-postgres
+	time make bench-response-time-ac-chart-postgres
+
 bench-ac-timescaledb:
 	time make bench-disk-usage-timescaledb
 	time make bench-response-time-ac-timescaledb
@@ -87,6 +99,9 @@ bench-disk-usage-memsql:
 bench-disk-usage-timescaledb:
 	du -shm ./timescaledb
 
+bench-disk-usage-postgres:
+	du -shm ./postgres
+
 bench-ingestion-clickhouse:
 	php ./src/clickhouse/ingestion.php
 
@@ -107,6 +122,9 @@ bench-ingestion-ac-timescaledb:
 
 bench-ingestion-timescaledb:
 	php ./src/timescaledb/ingestion.php
+
+bench-ingestion-ac-postgres:
+	php ./src/postgres/ingestion-ac.php
 
 bench-response-time-clickhouse:
 	php ./src/clickhouse/response-time.php
@@ -138,6 +156,12 @@ bench-response-time-ac-chart-timescaledb:
 bench-response-time-timescaledb:
 	php ./src/timescaledb/response-time.php
 
+bench-response-time-ac-postgres:
+	php ./src/postgres/response-time-ac.php
+
+bench-response-time-ac-chart-postgres:
+	php ./src/postgres/response-time-ac-chart.php
+
 clean-clickhouse-store:
 	rm -rf ./clickhouse/store
 	make restart-clickhouse
@@ -165,7 +189,13 @@ clean-timescaledb: stop-timescaledb
 	docker network rm bench_timescaledb > /dev/null 2>&1 || true
 	rm -rf ./timescaledb && mkdir timescaledb && touch timescaledb/.gitkeep
 
-clean: clean-clickhouse clean-elasticsearch clean-memsql clean-timescaledb
+clean-postgres: stop-postgres
+	docker rm bench_postgres > /dev/null 2>&1 || true
+	sleep 5
+	docker network rm bench_postgres > /dev/null 2>&1 || true
+	rm -rf ./postgres && mkdir postgres && touch postgres/.gitkeep
+
+clean: clean-clickhouse clean-elasticsearch clean-memsql clean-timescaledb clean-postgres
 
 install-clickhouse:
 	docker network create bench_clickhouse && \
@@ -184,7 +214,11 @@ install-timescaledb:
 	docker network create bench_timescaledb && \
 	docker run -p 15432:5432 -v $(CURRENT_DIR)/timescaledb:/var/lib/postgresql/database --name bench_timescaledb -d -e POSTGRES_PASSWORD=password -e TS_TUNE_MEMORY=8GB -e TS_TUNE_NUM_CPUS=16 --net=bench_timescaledb timescale/timescaledb:2.0.0-rc3-pg12
 
-install: install-clickhouse install-elasticsearch install-memsql install-timescaledb
+install-postgres:
+	docker network create bench_postgres && \
+	docker run -p 5432:5432 -v $(CURRENT_DIR)/postgres/db-files:/var/lib/postgresql/data --name bench_postgres -d -e POSTGRES_PASSWORD=password --net=bench_postgres postgres:12.5
+
+install: install-clickhouse install-elasticsearch install-memsql install-timescaledb install-postgres
 	composer install
 
 restart-clickhouse:
@@ -202,7 +236,10 @@ start-memsql:
 start-timescaledb:
 	docker start bench_timescaledb
 
-start: start-clickhouse start-elasticsearch start-memsql start-timescaledb
+start-postgres:
+	docker start bench_postgres
+
+start: start-clickhouse start-elasticsearch start-memsql start-timescaledb start-postgres
 
 stop-clickhouse:
 	docker stop bench_clickhouse > /dev/null 2>&1 || true
@@ -216,4 +253,7 @@ stop-memsql:
 stop-timescaledb:
 	docker stop bench_timescaledb > /dev/null 2>&1 || true
 
-stop: stop-clickhouse stop-elasticsearch stop-memsql stop-timescaledb
+stop-postgres:
+	docker stop bench_postgres> /dev/null 2>&1 || true
+
+stop: stop-clickhouse stop-elasticsearch stop-memsql stop-timescaledb stop-postgres
